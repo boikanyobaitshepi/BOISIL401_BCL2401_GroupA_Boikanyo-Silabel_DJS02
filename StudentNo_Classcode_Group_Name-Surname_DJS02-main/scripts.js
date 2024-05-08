@@ -2,40 +2,47 @@ const form = document.querySelector("[data-form]");
 const result = document.querySelector("[data-result]");
 
 form.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const entries = new FormData(event.target);
-  const { dividend, divider } = Object.fromEntries(entries);
-  result.innerText = dividend / divider;
+    event.preventDefault();
+    const entries = new FormData(event.target);
+    const dividend = entries.get("dividend");
+    const divider = entries.get("divider");
 
-  if (!dividend || !divider) {
-    result.classList.add("error-message")
-    result.innerText = "Division not performed. Both values are required in inputs. Try again.";
-    return;
+    // Error handling: check if inputs are empty
+    if (!dividend || !divider) {
+        result.classList.add("error-message");
+        result.innerText = "Division not performed. Both values are required in inputs. Try again.";
+        return;
+    }
 
+    // Error handling: check if inputs contain invalid characters
     const validInputRegex = /^[0-9]+$/;
     if (!validInputRegex.test(dividend) || !validInputRegex.test(divider)) {
-        result.classList.add("critical-error")
+        result.classList.add("critical-error");
         result.innerText = "Something critical went wrong. Please reload the page.";
         return;
     }
 
     try {
-      // Force Number conversion
-      const dividendNumber = Number(dividend);
-      const divisorNumber = Number(divider);
+        // Force Number conversion
+        const dividendNumber = Number(dividend);
+        const divisorNumber = Number(divider);
 
-      // Check for specific "YOLO" and "+++" input case
-      if (dividend === "YOLO" && divider === "+++") {
-          result.innerText = "Something critical went wrong. Please reload the page.";
-          return;
-      }
+        // Check for specific "YOLO" and "+++" input case
+        if (dividend === "YOLO" && divider === "+++") {
+            result.innerText = "Something critical went wrong. Please reload the page.";
+            return;
+        }
 
-      if (isNaN(dividendNumber) || isNaN(divisorNumber) || divisorNumber === 0) {
-        throw new Error("Invalid input: Division by zero or non-numeric value provided.");
+        // Check for other numeric errors
+        if (isNaN(dividendNumber) || isNaN(divisorNumber) || divisorNumber === 0) {
+            throw new Error("Invalid input: Division by zero or non-numeric value provided.");
+        }
+
+        const resultValue = Math.floor(dividendNumber / divisorNumber);
+        result.innerText = resultValue.toString();
+
+    } catch (error) {
+        result.classList.add("critical-error");
+        result.innerText = error.message;
     }
-
-    const resultValue = Math.floor(dividendNumber / divisorNumber);
-    result.innerText = resultValue.toString();
-
-
 });
