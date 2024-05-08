@@ -30,4 +30,12 @@ form.addEventListener("submit", (event) => {
           return;
       }
 
+      if (isNaN(dividendNumber) || isNaN(divisorNumber) || divisorNumber === 0) {
+        throw new Error("Invalid input: Division by zero or non-numeric value provided.");
+    }
+
+    const resultValue = Math.floor(dividendNumber / divisorNumber);
+    result.innerText = resultValue.toString();
+
+
 });
