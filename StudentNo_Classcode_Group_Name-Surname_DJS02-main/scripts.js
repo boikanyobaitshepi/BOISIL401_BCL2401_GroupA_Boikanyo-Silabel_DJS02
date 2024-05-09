@@ -11,7 +11,7 @@ form.addEventListener("submit", (event) => {
     if (!dividend || !divider) {
         result.classList.add("error-message");
         result.innerText = "Division not performed. Both values are required in inputs. Try again.";
-        return;
+        // return;
     }
 
     // Error handling: check if inputs contain invalid characters
@@ -24,25 +24,26 @@ form.addEventListener("submit", (event) => {
 
     try {
         // Force Number conversion
-        const dividendNumber = Number(dividend);
-        const divisorNumber = Number(divider);
+        // const dividendNumber = Number(dividend);
+        // const divisorNumber = Number(divider);
 
         // Check for specific "YOLO" and "+++" input case
-        if (dividend === "YOLO" && divider === "+++") {
-            result.innerText = "Something critical went wrong. Please reload the page.";
-            return;
-        }
+        // if (dividend === "YOLO" && divider === "+++") {
+        //     result.innerText = "Something critical went wrong. Please reload the page.";
+        //     return;
+        // }
 
         // Check for other numeric errors
-        if (isNaN(dividendNumber) || isNaN(divisorNumber) || divisorNumber === 0) {
+        if ( divider === "0") {
+            // result.classList.remove("critical-error")
             throw new Error("Invalid input: Division by zero or non-numeric value provided.");
         }
 
-        const resultValue = Math.floor(dividendNumber / divisorNumber);
-        result.innerText = resultValue.toString();
+       result.innerText = Math.floor(dividend / divider);
+        // result.innerText = resultValue.toString();
 
     } catch (error) {
-        result.classList.add("critical-error");
+        // result.classList.add("critical-error");
         result.innerText = error.message;
     }
 });
