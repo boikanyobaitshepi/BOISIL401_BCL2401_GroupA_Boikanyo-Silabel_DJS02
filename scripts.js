@@ -9,24 +9,24 @@ form.addEventListener("submit", (event) => {
 
     // Error handling: check if inputs are empty
     if (dividend === "" || divider === "") {
-        //result.classList.add("error-message");
         result.innerText = "Division not performed. Both values are required in inputs. Try again.";
+        console.error("Division not performed. Both values are required in inputs. Try again.")
         return;
     }
 
     if (isNaN(dividend) || isNaN(divider)) {
         result.classList.add("critical-error");
         result.innerText = "Something critical went wrong. Please reload the page.";
+        console.error("Something critical went wrong. Please reload the page.");
         return;
     }
 
     if (divider === "0"){
-        result.innerText = "Invalid input: Division by zero or non-numeric value provided." ;
+        result.innerText = "Division not performed. Invalid number provided. Try again." ;
+        console.error("Division not performed. Invalid number provided. Try again.")
         return;
     }
     
-
        result.innerText = Math.floor(dividend / divider);
-        // result.innerText = resultValue.toString();
     
 });
