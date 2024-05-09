@@ -6,9 +6,10 @@ form.addEventListener("submit", (event) => {
     const entries = new FormData(event.target);
     const dividend = entries.get("dividend");
     const divider = entries.get("divider");
-
+    result.classList.remove('error-message');
     // Error handling: check if inputs are empty
     if (dividend === "" || divider === "") {
+        result.classList.add('error-message');
         result.innerText = "Division not performed. Both values are required in inputs. Try again.";
         console.error("Division not performed. Both values are required in inputs. Try again.")
         return;
@@ -22,6 +23,7 @@ form.addEventListener("submit", (event) => {
     }
 
     if (divider === "0"){
+        result.classList.add('error-message');
         result.innerText = "Division not performed. Invalid number provided. Try again." ;
         console.error("Division not performed. Invalid number provided. Try again.")
         return;
